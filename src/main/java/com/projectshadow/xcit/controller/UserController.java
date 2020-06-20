@@ -22,6 +22,8 @@ public class UserController {
     @PostMapping("/users")
     public User registerUser(@RequestBody User user) {
 
+        User existedUser = userService.findUserByEmail(user.getEmail());
+
         user.setId(0);
         userService.save(user);
 
