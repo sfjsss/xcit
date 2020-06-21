@@ -1,6 +1,7 @@
 package com.projectshadow.xcit.controller;
 
 import com.projectshadow.xcit.entity.User;
+import com.projectshadow.xcit.exception.DuplicateEmailException;
 import com.projectshadow.xcit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,9 @@ public class UserController {
     public User registerUser(@RequestBody User user) {
 
         User existedUser = userService.findUserByEmail(user.getEmail());
+        if (existedUser != null) {
+            throw new DuplicateEmailException("This email is duplicated");
+        }
 
         user.setId(0);
         userService.save(user);
