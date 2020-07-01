@@ -3,7 +3,10 @@ package com.projectshadow.xcit.controller;
 import com.projectshadow.xcit.entity.User;
 import com.projectshadow.xcit.exception.DuplicateEmailException;
 import com.projectshadow.xcit.service.UserService;
+import com.projectshadow.xcit.util.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private UserService userService;
+    private Jwt jwtUtil;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, Jwt jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
     @PostMapping("/users")
-    public User registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
 
         User existedUser = userService.findUserByEmail(user.getEmail());
         if (existedUser != null) {
@@ -30,7 +35,8 @@ public class UserController {
 
         user.setId(0);
         userService.save(user);
+        String newToken = jwtUtil.generateToken(user.getEmail());
 
-        return user;
+        return new ResponseEntity<String>(newToken, HttpStatus.CREATED);
     }
 }
