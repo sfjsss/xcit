@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Service
-public class Jwt {
+public class JwtUtil {
 
     @Value("${jwt.signing.key.secret}")
     private String secret;

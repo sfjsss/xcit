@@ -3,7 +3,7 @@ package com.projectshadow.xcit.controller;
 import com.projectshadow.xcit.entity.User;
 import com.projectshadow.xcit.exception.DuplicateEmailException;
 import com.projectshadow.xcit.service.UserService;
-import com.projectshadow.xcit.util.Jwt;
+import com.projectshadow.xcit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private UserService userService;
-    private Jwt jwtUtil;
+    private JwtUtil jwtUtil;
 
     @Autowired
-    public UserController(UserService userService, Jwt jwtUtil) {
+    public UserController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
