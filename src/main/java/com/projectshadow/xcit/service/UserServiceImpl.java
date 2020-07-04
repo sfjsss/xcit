@@ -28,5 +28,19 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Override
+    public boolean authenticateUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            return false;
+        } else {
+            if (BCrypt.checkpw(password, user.getPassword())) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
 
 }
