@@ -3,15 +3,15 @@ package com.projectshadow.xcit.model;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserErrorResponse {
+public class ErrorResponse {
 
     private int statusCode;
     private Map<String, String> messages = new HashMap<>();
 
-    public UserErrorResponse() {
+    public ErrorResponse() {
     }
 
-    public UserErrorResponse(int statusCode, Map<String, String> messages) {
+    public ErrorResponse(int statusCode, Map<String, String> messages) {
         this.statusCode = statusCode;
         this.messages = messages;
     }
