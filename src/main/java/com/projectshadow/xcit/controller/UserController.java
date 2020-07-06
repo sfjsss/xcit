@@ -2,6 +2,7 @@ package com.projectshadow.xcit.controller;
 
 import com.projectshadow.xcit.entity.User;
 import com.projectshadow.xcit.exception.DuplicateEmailException;
+import com.projectshadow.xcit.exception.InvalidCredentialException;
 import com.projectshadow.xcit.service.UserService;
 import com.projectshadow.xcit.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,16 @@ public class UserController {
         String newToken = jwtUtil.generateToken(user.getEmail());
 
         return new ResponseEntity<String>(newToken, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody User user) {
+        if (!userService.authenticateUser(user.getEmail(), user.getPassword())) {
+            throw new InvalidCredentialException("the input credential is invalid");
+        }
+
+        String newToken = jwtUtil.generateToken(user.getEmail());
+
+        return new ResponseEntity<String>(newToken, HttpStatus.OK);
     }
 }
