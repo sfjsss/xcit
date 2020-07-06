@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/public")
 public class UserController {
@@ -27,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
 
         User existedUser = userService.findUserByEmail(user.getEmail());
         if (existedUser != null) {
