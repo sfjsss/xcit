@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/public")
-public class UserController {
+@RequestMapping("/api/public/authentication")
+public class AuthenticationController {
 
     private UserService userService;
     private JwtUtil jwtUtil;
 
     @Autowired
-    public UserController(UserService userService, JwtUtil jwtUtil) {
+    public AuthenticationController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
 
-    @PostMapping("/users")
+    @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody User user) {
 
         User existedUser = userService.findUserByEmail(user.getEmail());
