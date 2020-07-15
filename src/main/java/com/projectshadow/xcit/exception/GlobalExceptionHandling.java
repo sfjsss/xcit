@@ -38,6 +38,17 @@ public class GlobalExceptionHandling extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(uer, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException unfe) {
+
+        Map<String, String> messages = new HashMap<>();
+        messages.put("invalidEmail", unfe.getMessage());
+
+        ErrorResponse uer = new ErrorResponse(404, messages);
+
+        return new ResponseEntity<>(uer, HttpStatus.NOT_FOUND);
+    }
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 

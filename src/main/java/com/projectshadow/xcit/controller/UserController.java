@@ -1,6 +1,7 @@
 package com.projectshadow.xcit.controller;
 
 import com.projectshadow.xcit.entity.User;
+import com.projectshadow.xcit.exception.UserNotFoundException;
 import com.projectshadow.xcit.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,9 @@ public class UserController {
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
         User user = userService.findUserByEmail(email);
 
+        if (user == null) {
+            throw new UserNotFoundException("a user associated with this email cannot be found");
+        }
 
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
