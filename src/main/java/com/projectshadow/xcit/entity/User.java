@@ -30,6 +30,8 @@ public class User {
     @Size(min = 6)
     private String password;
 
+    private String invitationCode;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(updatable = false)
     private LocalDate createdAt;
@@ -75,6 +77,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getInvitationCode() {
+        return invitationCode;
+    }
+
+    public void setInvitationCode(String invitationCode) {
+        this.invitationCode = invitationCode;
     }
 
     public LocalDate getCreatedAt() {
