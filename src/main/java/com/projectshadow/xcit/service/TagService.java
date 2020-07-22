@@ -8,4 +8,5 @@ public interface TagService {
 
     void createTag(Tag newTag);
     List<Tag> findAllTags();
+    List<Tag> findAllTagsByCategory(String category);
 }

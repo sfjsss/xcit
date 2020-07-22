@@ -4,10 +4,7 @@ import com.projectshadow.xcit.entity.Tag;
 import com.projectshadow.xcit.service.TagService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -30,8 +27,16 @@ public class TagController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
+    @GetMapping("")
     public ResponseEntity<List<Tag>> fetchAllTags() {
         List<Tag> tags = tagService.findAllTags();
+
+        return new ResponseEntity<>(tags, HttpStatus.OK);
+    }
+
+    @GetMapping("/{category}")
+    public ResponseEntity<List<Tag>> fetchAllTagsByCategory(@PathVariable String category) {
+        List<Tag> tags = tagService.findAllTagsByCategory(category);
 
         return new ResponseEntity<>(tags, HttpStatus.OK);
     }
